@@ -2,11 +2,8 @@ package com.capg.addressbook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-import org.junit.Test;
 
+import java.util.List;
 
 import com.capg.addressbook.AddressBookMain.IOService;
 import com.capg.addressbook.AddressBookService;
@@ -28,7 +25,7 @@ public class AddressBookTest {
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
 		assertEquals(4, contactData.size());
 	}
-	
+
 	/**Usecase17: Updating phone number of a persons in contact table
 	 * @throws DatabaseException
 	 * @throws SQLException
@@ -41,20 +38,4 @@ public class AddressBookTest {
 		addressBookService.readContactData(IOService.DB_IO);
 		boolean result = addressBookService.checkContactDataSync("Isha");
 		assertEquals(true, result);
-	}
-	
-	/**
-	 * Usecase18: retrieving data from the table between data range
-	 * 
-	 * @throws DatabaseException
-	 * @throws SQLException 
-	 */
-	@Test
-	public void givenContactInDB_WhenRetrievedForDateRange_ShouldMatchContactCount() throws DatabaseException, SQLException {
-		AddressBookService addressBookService = new AddressBookService();
-		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		List<Contact> resultList = addressBookService.getContactForDateRange(LocalDate.of(2020, 01, 01),
-				LocalDate.of(2021, 01, 01));
-		assertEquals(1, resultList.size());
-	}
-}
+

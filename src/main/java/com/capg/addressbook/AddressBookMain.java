@@ -75,7 +75,7 @@ import com.opencsv.exceptions.CsvValidationException;
 		public void searchPersonByCity(String name, String city) {
 			List<Contact> list = new ArrayList<Contact>();
 			for(Map.Entry<String,AddressBook> entry : addressBookMap.entrySet()) {
-				list = entry.getValue().getBook().stream()
+				List<Contact> tempList = entry.getValue().getBook().stream()
 						.filter(c-> c.getCity().equalsIgnoreCase(city))
 						.filter(c->(c.getFirstName()+" "+c.getLastName())
 						.equals(name)).collect(Collectors.toList());
@@ -88,7 +88,7 @@ import com.opencsv.exceptions.CsvValidationException;
 		public void searchPersonByState(String name, String state) {
 			List<Contact> list = new ArrayList<Contact>();
 			for(Map.Entry<String,AddressBook> entry : addressBookMap.entrySet()) {
-				list = entry.getValue().getBook().stream()
+				List<Contact> tempList = entry.getValue().getBook().stream()
 						.filter(c-> c.getState().equalsIgnoreCase(state))
 						.filter(c->(c.getFirstName()+" "+c.getLastName())
 						.equalsIgnoreCase(name)).collect(Collectors.toList());
@@ -101,7 +101,7 @@ import com.opencsv.exceptions.CsvValidationException;
 		public void viewDataByCity(String city) {
 			List<Contact> list = new ArrayList<Contact>();
 			for(Map.Entry<String,AddressBook> entry : addressBookMap.entrySet()) {
-				list = entry.getValue().getBook().stream()
+				List<Contact> tempList = entry.getValue().getBook().stream()
 						.filter(c-> c.getCity().equalsIgnoreCase(city))
 						.collect(Collectors.toList());
 				list.addAll(tempList);
