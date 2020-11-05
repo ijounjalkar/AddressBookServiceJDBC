@@ -35,9 +35,9 @@ public class AddressBookTest {
 	public void givenNewDataForContact_WhenUpdated_ShouldBeInSync() throws DatabaseException, SQLException {
 		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		addressBookService.updatePersonsPhone("Aditya", "8850273350");
+		addressBookService.updatePersonsPhone("Isha", "7457120752");
 		addressBookService.readContactData(IOService.DB_IO);
-		boolean result = addressBookService.checkContactDataSync("Aditya");
+		boolean result = addressBookService.checkContactDataSync("Isha");
 		assertEquals(true, result);
 	} 
 }
