@@ -9,19 +9,34 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+import com.capg.addressbook.AddressBookMain.IOService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonStreamParser;
 
 public class AddressBookService {
+	
 	public static String PAYROLL_FILE_NAME = "AddressBook.txt";
 	public static String CSV_FILE = "AddressBook.csv";
 	public static String JSON_FILE = "AddressBook.json";
+	public enum IOService {
+		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+	};
+	
+	private List<Contact> contactList = new ArrayList<>();
+	private AddressBookDB addressBookDB;
+	
+	public AddressBookService() {
+		addressBookDB = AddressBookDB.getInstance();
+	}
 
 	public void writeData(Map<String, AddressBook> addressBookMap) {
 		StringBuffer employeeBuffer = new StringBuffer();
@@ -127,6 +142,36 @@ public class AddressBookService {
 			exception.printStackTrace();
 		}
 	}
+	public List<Contact> readContactData(com.capg.addressbook.AddressBookMain.IOService dbIo) throws DatabaseException, SQLException {
+		if (dbIo.equals(IOService.DB_IO)) {
+			this.contactList = addressBookDB.readData();
+		}
+		return this.contactList;
+	}
+	
+	public void updatePersonsPhone(String name, String phone) throws DatabaseException, SQLException {
+		int result = addressBookDB.updatePersonsData(name, phone);
+		if (result == 0)
+			return;
+		Contact contact = this.getContact(name);
+		if (contact != null)
+			contact.phoneNumber = Long.parseLong(phone);
+	}
+
+
+	private Contact getContact(String fname) {
+		Contact contact = this.contactList.stream().filter(contactData -> contactData.firstName.equals(fname))
+				.findFirst().orElse(null);
+		return contact;
+	}
+
+
+	public boolean checkContactDataSync(String name) throws com.capg.addressbook.DatabaseException {
+		List<Contact> employeeList = addressBookDB.getContactFromData(name);
+		return employeeList.get(0).equals(getContact(name));
+		
+	}
+
 
 }
 
