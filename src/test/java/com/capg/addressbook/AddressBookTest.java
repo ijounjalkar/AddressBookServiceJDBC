@@ -57,12 +57,34 @@ public class AddressBookTest {
 				LocalDate.of(2021, 01, 01));
 		assertEquals(1, resultList.size());
 	}
+	/**
+	 * Usecase19: retrieving data from the table for city and state
+	 * 
+	 * @throws DatabaseException
+	 * @throws SQLException 
+	 */
 	@Test
 	public void givenContactInDB_WhenRetrievedForCityAndState_ShouldMatchContactCount() throws DatabaseException, SQLException {
 		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		List<Contact> resultList = addressBookService.getContactForCityAndState("Akola","Maharashta");
+		List<Contact> resultList = addressBookService.getContactForCityAndState("Akola", "Maharashta");
 		assertEquals(2, resultList.size());
+	}
+
+	/**
+	 * Usecase20: Insert data into database in a single transaction
+	 * 
+	 * @throws DatabaseException
+	 * @throws SQLException
+	 */
+	@Test
+	public void givenContactInDB_WhenAdded_ShouldBeAddedInSingleTransaction() throws DatabaseException, SQLException {
+		AddressBookService addressBookService = new AddressBookService();
+		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
+		addressBookService.addContactInDatabase("Leena", "Sarode", "Panvel", "400019", "Mumbai", "Maharashtra",
+                                               "9859629542", "hjhgy@gmail.com", LocalDate.of(2021, 01, 01), "AddressBook1", "friend");
+		boolean result = addressBookService.checkContactDataSync("Leena");
+		assertEquals(true, result);
 	}
 	
 	
