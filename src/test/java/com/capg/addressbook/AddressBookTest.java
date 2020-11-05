@@ -53,12 +53,8 @@ public class AddressBookTest {
 				LocalDate.of(2021, 01, 01));
 		assertEquals(1, resultList.size());
 	}
+
 	@Test
 	public void givenContactInDB_WhenRetrievedForCityAndState_ShouldMatchContactCount() throws DatabaseException, SQLException {
 		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		List<Contact> resultList = addressBookService.getContactForCityAndState("Akola","Maharashta");
-		assertEquals(2, resultList.size());
-	}
-	}	
-
