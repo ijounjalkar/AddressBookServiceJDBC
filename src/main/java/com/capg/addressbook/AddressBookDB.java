@@ -15,6 +15,7 @@ public class AddressBookDB {
 	private static PreparedStatement contactStatement;
 	private static AddressBookDB addressBookDB;
 	
+	
 	public AddressBookDB() {
 		
 	}

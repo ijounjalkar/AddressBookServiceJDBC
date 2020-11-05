@@ -2,11 +2,8 @@ package com.capg.addressbook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-import org.junit.Test;
 
+import java.util.List;
 
 import com.capg.addressbook.AddressBookMain.IOService;
 import com.capg.addressbook.AddressBookService;
@@ -28,7 +25,7 @@ public class AddressBookTest {
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
 		assertEquals(4, contactData.size());
 	}
-	
+
 	/**Usecase17: Updating phone number of a persons in contact table
 	 * @throws DatabaseException
 	 * @throws SQLException
@@ -42,8 +39,7 @@ public class AddressBookTest {
 		boolean result = addressBookService.checkContactDataSync("Isha");
 		assertEquals(true, result);
 	}
-	
-	/**
+		/**
 	 * Usecase18: retrieving data from the table between data range
 	 * 
 	 * @throws DatabaseException
@@ -57,35 +53,8 @@ public class AddressBookTest {
 				LocalDate.of(2021, 01, 01));
 		assertEquals(1, resultList.size());
 	}
-	/**
-	 * Usecase19: retrieving data from the table for city and state
-	 * 
-	 * @throws DatabaseException
-	 * @throws SQLException 
-	 */
+
 	@Test
 	public void givenContactInDB_WhenRetrievedForCityAndState_ShouldMatchContactCount() throws DatabaseException, SQLException {
 		AddressBookService addressBookService = new AddressBookService();
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		List<Contact> resultList = addressBookService.getContactForCityAndState("Akola", "Maharashta");
-		assertEquals(2, resultList.size());
-	}
-
-	/**
-	 * Usecase20: Insert data into database in a single transaction
-	 * 
-	 * @throws DatabaseException
-	 * @throws SQLException
-	 */
-	@Test
-	public void givenContactInDB_WhenAdded_ShouldBeAddedInSingleTransaction() throws DatabaseException, SQLException {
-		AddressBookService addressBookService = new AddressBookService();
-		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
-		addressBookService.addContactInDatabase("Leena", "Sarode", "Panvel", "400019", "Mumbai", "Maharashtra",
-                                               "9859629542", "hjhgy@gmail.com", LocalDate.of(2021, 01, 01), "AddressBook1", "friend");
-		boolean result = addressBookService.checkContactDataSync("Leena");
-		assertEquals(true, result);
-	}
-	
-	
-}
