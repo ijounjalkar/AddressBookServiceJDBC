@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -172,8 +173,9 @@ public class AddressBookService {
 		
 	}
 
+	public List<Contact> getContactForDateRange(LocalDate start, LocalDate end) throws DatabaseException {
+		return addressBookDB.getEmployeeForDateRange(start, end);
+	}
 
 }
-
-
 

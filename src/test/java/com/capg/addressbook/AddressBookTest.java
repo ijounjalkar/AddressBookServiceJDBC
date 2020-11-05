@@ -2,10 +2,8 @@ package com.capg.addressbook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.SQLException;
-import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import com.capg.addressbook.AddressBookMain.IOService;
 import com.capg.addressbook.AddressBookService;
@@ -27,6 +25,7 @@ public class AddressBookTest {
 		List<Contact> contactData = addressBookService.readContactData(IOService.DB_IO);
 		assertEquals(4, contactData.size());
 	}
+
 	/**Usecase17: Updating phone number of a persons in contact table
 	 * @throws DatabaseException
 	 * @throws SQLException
@@ -39,5 +38,4 @@ public class AddressBookTest {
 		addressBookService.readContactData(IOService.DB_IO);
 		boolean result = addressBookService.checkContactDataSync("Isha");
 		assertEquals(true, result);
-	} 
-}
+
